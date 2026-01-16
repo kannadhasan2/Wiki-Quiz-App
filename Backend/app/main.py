@@ -9,9 +9,7 @@ from app import crud
 
 app = FastAPI(title="Wiki Quiz Generator API")
 
-# Optional: creates local tables if you ever point to local Postgres.
-# For Supabase, you already created tables in SQL Editor.
-Base.metadata.create_all(bind=engine)
+
 
 @app.get("/health")
 def health():
