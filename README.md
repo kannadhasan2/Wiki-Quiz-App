@@ -36,18 +36,20 @@ It also provides a **history API** to retrieve previously generated quizzes.
 Backend/
 │
 ├── app/
-│ ├── main.py # FastAPI routes
-│ ├── config.py # Environment variables
-│ ├── db.py # Database connection
-│ ├── models.py # SQLAlchemy models
-│ ├── schemas.py # Pydantic schemas
-│ ├── scraper.py # Wikipedia HTML scraping
-│ ├── llm.py # Gemini + LangChain logic
-│ ├── crud.py # Database operations
-│ └── init.py
+│   ├── main.py        # FastAPI routes
+│   ├── config.py      # Environment variables loader
+│   ├── db.py          # Database connection (Supabase Postgres)
+│   ├── models.py      # SQLAlchemy models
+│   ├── schemas.py     # Pydantic schemas
+│   ├── scraper.py     # Wikipedia HTML scraping
+│   ├── llm.py         # Gemini + LangChain logic
+│   ├── crud.py        # Database operations
+│   └── __init__.py
 │
-├── requirements.txt
-├── .env
+├── requirements.txt   # Python dependencies
+├── .env               # Environment variables
+└── supabase.sql       # Supabase SQL schema (tables, triggers)
+
 
 
 
