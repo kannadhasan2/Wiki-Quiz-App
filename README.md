@@ -32,7 +32,7 @@ It also provides a **history API** to retrieve previously generated quizzes.
 - **ORM:** SQLAlchemy
 - **Environment:** Python 3.10+
 
----
+```
 Backend/
 │
 ├── app/
@@ -50,7 +50,7 @@ Backend/
 ├── .env               # Environment variables
 └── supabase.sql       # Supabase SQL schema (tables, triggers)
 
-
+```
 
 
 ---
