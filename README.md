@@ -4,6 +4,10 @@ This project is a backend service that accepts a **Wikipedia article URL**, scra
 It also provides a **history API** to retrieve previously generated quizzes.
 
 ---
+##Deployment
+**Backend**: https://wiki-quiz-app-sauw.onrender.com
+**Frontend**: 
+---
 
 ## ✨ Features
 
