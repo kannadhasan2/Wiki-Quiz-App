@@ -6,9 +6,17 @@ from app.schemas import GenerateRequest, QuizPayload, QuizListItem
 from app.scraper import scrape_wikipedia
 from app.llm import generate_quiz_payload
 from app import crud
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Wiki Quiz Generator API")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,  # must be False when using "*"
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/health")
