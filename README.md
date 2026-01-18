@@ -1,13 +1,21 @@
-# Wikipedia Quiz Generator – Backend (FastAPI + Gemini + Supabase)
+# 🧠 Wikipedia Quiz Generator – Full Stack (FastAPI + Gemini + Supabase + React + Tailwind)
 
-This project is a backend service that accepts a **Wikipedia article URL**, scrapes its HTML content, generates a **quiz using a Large Language Model (Gemini)**, and stores all results in a **PostgreSQL database (Supabase)**.  
-It also provides a **history API** to retrieve previously generated quizzes.
+This project is a **full-stack application** that accepts a **Wikipedia article URL**, scrapes its HTML content, generates a **quiz using a Large Language Model (Google Gemini via LangChain)**, and stores all results in a **PostgreSQL database (Supabase)**.
+
+It includes:
+- ✅ FastAPI backend (scraping + LLM + DB storage)
+- ✅ React + Tailwind frontend (2 tabs + modal)
+- ✅ History view backed by Supabase PostgreSQL
+- ✅ Caching to avoid duplicate LLM calls
 
 ---
-##Deployment
-**Backend**: https://wiki-quiz-app-sauw.onrender.com
-**Frontend**: 
----
+
+## 🌍 Deployment
+
+- **Backend (FastAPI Render)**: https://wiki-quiz-app-sauw.onrender.com  
+- **Frontend**: https://wiki-quiz-app-two.vercel.app/
+
+> Local frontend runs at: `http://localhost:5173`
 
 ## ✨ Features
 
@@ -25,6 +33,16 @@ It also provides a **history API** to retrieve previously generated quizzes.
 - Caching to prevent duplicate LLM calls
 - Graceful handling of Gemini free-tier quota limits
 
+  ### Frontend
+- Clean minimal UI with Tailwind
+- Two tabs:
+  - **Generate Quiz**
+  - **Past Quizzes (History)**
+- Card-based quiz layout
+- History table + Details modal
+- Optional “Take Quiz” mode (if enabled in UI)
+
+
 ---
 
 ## 🏗️ Tech Stack
@@ -36,6 +54,10 @@ It also provides a **history API** to retrieve previously generated quizzes.
 - **ORM:** SQLAlchemy
 - **Environment:** Python 3.10+
 
+### Frontend
+- **React + Vite**
+- **Tailwind CSS**
+- Fetch API
 ```
 Backend/
 │
@@ -54,10 +76,46 @@ Backend/
 ├── .env               # Environment variables
 └── supabase.sql       # Supabase SQL schema (tables, triggers)
 
+
+Frontend/
+│
+├── src/
+│   ├── components/
+│   │   ├── QuizCard.jsx    # Quiz card UI
+│   │   └── Modal.jsx       # Reusable modal
+│   ├── api.js              # Backend API calls
+│   ├── App.jsx             # Main app (Tabs: Generate + History)
+│   ├── main.jsx            # React entry point
+│   └── index.css           # Tailwind CSS styles
+│
+├── index.html
+├── tailwind.config.js
+├── postcss.config.js
+├── vite.config.js
+└── package.json
+
+
 ```
 
 
 ---
+## 📦 Installation
+
+### Prerequisites
+- Python **3.10+**
+- Node.js **18+**
+- PostgreSQL (Supabase)
+- Git
+
+---
+
+## 🔧 Backend Installation (FastAPI)
+
+### 1️⃣ Clone the repository
+```bash
+git clone <YOUR_REPOSITORY_URL>
+cd Backend
+```
 
 ## 🗄️ Supabase Database Setup (Step-by-Step)
 
@@ -95,98 +153,26 @@ create table if not exists wiki_quizzes (
 DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@db.YOUR_PROJECT_REF.supabase.co:5432/postgres?sslmode=require  
 GEMINI_API_KEY=YOUR_GEMINI_API_KEY  
 APP_ENV=development  
+```
 
-## 📦 Installation & Run
+## 🎨 Frontend Installation (React + Tailwind CSS)
 
-### 1️⃣ Install dependencies
+### Prerequisites
+- Node.js **18+**
+- npm (comes with Node.js)
 
-pip install -r requirements.txt  
+---
 
-### 2️⃣ Start server
-
-uvicorn app.main:app --reload --port 8000  
-
-### 3️⃣ Health check
-
-GET http://127.0.0.1:8000/health  
-
-## 🔌 API Endpoints
-
-### ▶ Generate Quiz
-
-POST /generate-quiz  
-
-#### Request
-
-{
-  "url": "https://en.wikipedia.org/wiki/Alan_Turing"
-}
-
-#### Response (sample)
-
-{
-  "id": 1,
-  "url": "https://en.wikipedia.org/wiki/Alan_Turing",
-  "title": "Alan Turing",
-  "summary": "Alan Turing was a British mathematician...",
-  "key_entities": {
-    "people": ["Alan Turing", "Alonzo Church"],
-    "organizations": ["Bletchley Park"],
-    "locations": ["United Kingdom"]
-  },
-  "sections": ["Early life", "World War II", "Legacy"],
-  "quiz": [
-    {
-      "question": "What was Alan Turing’s contribution during WWII?",
-      "options": [
-        "Breaking the Enigma code",
-        "Inventing radar",
-        "Developing jet engines",
-        "Atomic research"
-      ],
-      "answer": "Breaking the Enigma code",
-      "difficulty": "medium",
-      "explanation": "Mentioned in the World War II section."
-    }
-  ],
-  "related_topics": ["Cryptography", "Enigma machine"]
-}
-
-### ▶ Get Quiz History
-
-GET /quizzes  
-
-Returns a list of previously processed Wikipedia URLs.
-
-### ▶ Get Quiz Details
-
-GET /quizzes/{id}  
-
-Returns full quiz data for a specific record.
-
-## 🧠 Prompt Design (LangChain)
-
-Key design principles:
-
-Uses only article content  
-Explicit JSON schema  
-Prevents hallucination  
-Enforces difficulty levels  
-Short grounded explanations  
-
-The prompt strictly instructs the LLM to return valid JSON only.
-
-## ⚠️ Gemini Free Tier Limitation
-
-Gemini free tier allows ~20 requests per day per model  
-
-To handle this:
-
-URL-based caching prevents duplicate LLM calls  
-Graceful 429 handling  
-Cached quizzes are returned instantly  
-
-This mirrors real-world production strategies for LLM cost and rate-limit control.
-
-## 📁 Project Structure
-
+### 1️⃣ Navigate to frontend directory
+```bash
+cd Frontend
+npm install
+npm run dev
+```
+### 2️⃣ Configure backend API URL
+### Edit Frontend/src/api.js:
+```
+const BASE_URL = "http://localhost:8000";
+// or deployed backend:
+// const BASE_URL = "https://wiki-quiz-app-sauw.onrender.com";
+```
