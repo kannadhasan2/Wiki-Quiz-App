@@ -32,7 +32,7 @@ export default function QuizCard({ quiz, reveal }) {
             </p>
           )}
 
-          <span className="inline-block mt-2 text-xs px-2 py-1 bg-gray-200 rounded">
+          <span className={`inline-block mt-2 text-xs px-2 py-1 uppercase font-bold  rounded ${q.difficulty === "medium" && "bg-yellow-500"} ${q.difficulty === "hard" && "bg-red-500"} ${q.difficulty === "easy" && "bg-green-500"}`}>
             {q.difficulty}
           </span>
         </div>
